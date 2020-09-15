@@ -10,14 +10,13 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.os }} ${{ matrix.PLUGIN }} group ${{ matrix.TEST_GROUP }}
+    name: ${{ matrix.os }} ${{ matrix.PLUGIN }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
         PLUGIN: [sbt-coursier, sbt-lm-coursier]
-        TEST_GROUP: [1, 2]
     steps:
     - name: Don't convert LF to CRLF during checkout
       if: runner.os == 'Windows'
@@ -36,7 +35,6 @@ jobs:
       shell: bash
       env:
         PLUGIN: ${{ matrix.PLUGIN }}
-        TEST_GROUP: ${{ matrix.TEST_GROUP }}
 
   publish:
     needs: test
